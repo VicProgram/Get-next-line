@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 19:44:11 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/02 20:01:41 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/02 20:05:05 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ char	*get_next_line(int fd)
 }
 int	main(void)
 {
-
+	
 	return (0);
 }
