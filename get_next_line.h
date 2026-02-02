@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 19:57:22 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/02 20:00:45 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/02 20:02:18 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+char	*get_next_line(int fd);
 
 #endif
