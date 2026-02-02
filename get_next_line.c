@@ -6,12 +6,12 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 19:44:11 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/02 19:49:42 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/02 19:52:08 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	main(void)
 {
-	printf("hola");
+
 	return (0);
 }
