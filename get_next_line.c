@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 19:44:11 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/04 18:12:37 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/05 17:42:39 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,38 @@ char	*get_next_line(int fd)
 	static char	*nextl;
 
 	nextl = "";
-	temp = malloc(BUFFER_SIZE);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	temp = malloc(BUFFER_SIZE + 1);
 	if (!temp)
 		return (NULL);
 	byread = read(fd, temp, BUFFER_SIZE);
-	// strchr
-	nextl = ft_strlcpy(nextl, temp, BUFFER_SIZE);
-	printf("%s", nextl);
+	if (byread == 0)
+	{
+		free(nextl);
+		return (NULL);
+	}
+	while (byread > 0)
+	{
+		nextl = ft_strjoin(nextl, temp);
+		if (ft_strchr(nextl, '\n'))
+			break;
+		byread = read(fd, temp, BUFFER_SIZE);
+	}
 	free(temp);
 	return (nextl);
 }
 int	main(void)
 {
 	int	fd;
-	int	i;
+	char	*line;
 
-	i = 4;
 	fd = open("naufrago.txt", O_RDONLY);
-	printf("------------------MAIN------\n");
-	while (i > 0)
-	{
-		printf("%s\n", get_next_line(fd));
-		i--;
-	}
-	printf("------------------MAIN------\n");
-	printf("%s\n", get_next_line(fd));
+	if (fd == -1)
+		return (1);
+	
+	while ((line = get_next_line(fd)))
+		printf("%s\n", line);
 	close(fd);
 	return (0);
 }
