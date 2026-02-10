@@ -5,54 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/04 12:34:37 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/05 17:39:55 by vabad-ro         ###   ########.fr       */
+/*   Created: 2026/02/10 20:34:46 by vabad-ro          #+#    #+#             */
+/*   Updated: 2026/02/10 21:42:24 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strlcpy(char *dst, char *src, size_t size)
+int	ft_strlen(const char *s)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
 
-	j = 0;
-	while (src[j] != '\0')
-		j++;
 	i = 0;
-	while (src[i] != '\0' && i < size - 1)
-	{
-		dst[i] = src[i];
+	while (s[i] != '\0')
 		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*new;
-
-	new = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		new[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j])
-	{
-		new[i + j] = s2[j];
-		j++;
-	}
-	new[i + j] = '\0';
-	return (new);
+	return (i);
 }
 char	*ft_strchr(const char *s, int c)
 {
@@ -73,28 +40,42 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
-int	ft_strlen(char *s)
+char	*ft_cleantemp(char *temp)
 {
 	int	i;
+	char	*newtemp;
 
+	newtemp = malloc(ft_strlen(temp));
 	i = 0;
-	while (*s)
+ 	while (temp[i] && temp[i] != '\n')
 	{
+		newtemp[i] = temp[i];
 		i++;
-		s++;
 	}
-	return (i);
+	if (temp[i] == '\n')
+	{
+		newtemp[i] = '\n';
+		i++;
+	}
+	newtemp[i] = '\0';
+	return (newtemp);
 }
 
-char	*ft_strdup(char *s)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		len;
-	char	*str;
+	char	*resul;
+	int	i;
+	int	j;
 
-	len = ft_strlen(s);
-	str = malloc(sizeof(char) * (len + 1));
-	if (!str)
+	i = 0;
+	j = 0;
+	resul = (char *) malloc(ft_strlen(s1) + ft_strlen(s2) + 1 * sizeof(char));
+	if (!resul)
 		return (NULL);
-	ft_strlcpy(str, s, len + 1);
-	return (str);
+	while (s1[i])
+		resul[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		resul[j++] = s2[i++];
+	return (resul);
 }

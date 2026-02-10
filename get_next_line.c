@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/02 19:44:11 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/05 17:42:39 by vabad-ro         ###   ########.fr       */
+/*   Created: 2026/02/10 20:03:13 by vabad-ro          #+#    #+#             */
+/*   Updated: 2026/02/10 22:17:35 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,49 @@
 
 char	*get_next_line(int fd)
 {
-	char		*temp;
-	ssize_t		byread;
-	static char	*nextl;
+	ssize_t			bytesread;
+	char			*temp;
+	char			buffer[BUFFER_SIZE + 1];
+	static char		*stash;
 
-	nextl = "";
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	temp = malloc(BUFFER_SIZE + 1);
-	if (!temp)
-		return (NULL);
-	byread = read(fd, temp, BUFFER_SIZE);
-	if (byread == 0)
+	
+	if (stash)
 	{
-		free(nextl);
-		return (NULL);
+		temp = (ft_strchr(stash, '\n') +1);
+		stash = NULL;
 	}
-	while (byread > 0)
+	else
 	{
-		nextl = ft_strjoin(nextl, temp);
-		if (ft_strchr(nextl, '\n'))
-			break;
-		byread = read(fd, temp, BUFFER_SIZE);
+		stash = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		temp = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	}
-	free(temp);
-	return (nextl);
+	//bytesread = 1;
+	bytesread = read(fd, buffer, BUFFER_SIZE);
+	while (bytesread > 0)
+	{
+		// bytesread = read(fd, buffer, BUFFER_SIZE);
+		temp = ft_strjoin(temp, buffer);
+		if (ft_strchr(temp, '\n'))
+		{
+			stash = temp;
+			return (ft_cleantemp(temp));
+		}
+		bytesread = read(fd, buffer, BUFFER_SIZE);
+	}
+	stash = NULL;
+	return (temp);
 }
+
 int	main(void)
 {
 	int	fd;
-	char	*line;
+	char	*linea;
 
 	fd = open("naufrago.txt", O_RDONLY);
 	if (fd == -1)
 		return (1);
-	
-	while ((line = get_next_line(fd)))
-		printf("%s\n", line);
+	 while ((linea = get_next_line(fd))!= NULL)
+		printf("%s\n", linea);
 	close(fd);
 	return (0);
 }

@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/02 19:57:22 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/05 17:39:47 by vabad-ro         ###   ########.fr       */
+/*   Created: 2026/02/10 20:03:05 by vabad-ro          #+#    #+#             */
+/*   Updated: 2026/02/10 21:20:09 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
@@ -23,13 +24,12 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-int	ft_strlen(char *s);
-
-char	*ft_strdup(char *s);
-char	*ft_strjoin(char *s1, char *s2);
+int	ft_strlen(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *s, int c);
 char	*get_next_line(int fd);
-char	*ft_checkbuff(char *temp);
-char	*ft_strlcpy(char *dst, char *src, size_t size);
+char	*ft_cleantemp(char *temp);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+
 
 #endif
