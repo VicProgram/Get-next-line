@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 20:03:05 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/11 20:37:46 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/11 20:41:46 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 200000000
+#  define BUFFER_SIZE 20
 
 # endif
 
