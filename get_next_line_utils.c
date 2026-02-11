@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 20:34:46 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/11 17:42:39 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/11 18:07:17 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
+
 char	*ft_strchr(const char *s, int c)
 {
 	char	*s_new;
@@ -40,37 +41,39 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
+
 char	*ft_cleantemp(char *temp)
 {
-	int	i;
+	int		i;
 	char	*newtemp;
 
 	i = 0;
 	while (temp[i] && temp[i] != '\n')
 		i++;
 	newtemp = malloc(i + 1);
-	if(!newtemp)
+	if (!newtemp)
 		return (NULL);
 	i = 0;
- 	while (temp[i] && (temp[i] != '\n'))
+	while (temp[i] && (temp[i] != '\n'))
 	{
 		newtemp[i] = temp[i];
 		i++;
 	}
 	if (temp[i] == '\n')
 		newtemp[i] = '\n';
+	free(temp);		//aitor
 	return (newtemp);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
-	result = (char *) malloc(ft_strlen(s1) + ft_strlen(s2) + 1 * sizeof(char));
+	result = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1 * sizeof(char));
 	if (!result)
 		return (NULL);
 	while (s1[i])
@@ -79,5 +82,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[i])
 		result[j++] = s2[i++];
 	result[j++] = '\0';
+	free(s1);		//aitor
 	return (result);
 }

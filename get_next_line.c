@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 20:03:13 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/11 17:42:58 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/11 18:13:01 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 
 char	*get_next_line(int fd)
 {
-	ssize_t			bytesread;
-	char			*temp;
-	char			buffer[BUFFER_SIZE + 1];
-	static char		*stash;
+	ssize_t		bytesread;
+	char		*temp;
+	char		buffer[BUFFER_SIZE + 1];
+	static char	*stash;
 
 	if (stash)
 	{
-		temp = (ft_strchr(stash, '\n') +1);
+		temp = (ft_strchr(stash, '\n') + 1);
 		stash = "NULL";
 	}
 	else
 	{
 		temp = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		temp = "NULL";
 	}
 	bytesread = read(fd, buffer, BUFFER_SIZE);
-	buffer[bytesread] =  '\0';
 	if (bytesread <= 0)
 		return (NULL);
+	buffer[bytesread] = '\0';
 	while (bytesread > 0)
 	{
 		temp = ft_strjoin(temp, buffer);
@@ -42,6 +41,8 @@ char	*get_next_line(int fd)
 			return (ft_cleantemp(temp));
 		}
 		bytesread = read(fd, buffer, BUFFER_SIZE);
+		if (bytesread <= 0)
+			return (NULL);
 	}
 	return (temp);
 }
@@ -53,18 +54,9 @@ int	main(void)
 
 	fd = open("naufrago.txt", O_RDONLY);
 	if (fd == -1)
-	 	return (1);
-	linea = get_next_line(fd);
-	while (linea)
-	{
-		printf("%s", linea);
-		free(linea);
-		linea = get_next_line(fd);
-	}
-	free  (linea);
- /* 	linea = get_next_line(fd);
-	printf("%s\n", linea); */
-	
+		return (1);
+
+
 	close(fd);
 	return (0);
 }
