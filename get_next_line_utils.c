@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 20:34:46 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/10 21:42:24 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/11 17:36:25 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,37 +45,44 @@ char	*ft_cleantemp(char *temp)
 	int	i;
 	char	*newtemp;
 
-	newtemp = malloc(ft_strlen(temp));
 	i = 0;
- 	while (temp[i] && temp[i] != '\n')
+	while (temp[i] != '\n')
+		i++;
+	newtemp = malloc(i + 1);
+	if(!newtemp)
+		return (NULL);
+	i = 0;
+ 	while (temp[i] && (temp[i] != '\n' && temp[i] != '\0'))
 	{
 		newtemp[i] = temp[i];
 		i++;
 	}
 	if (temp[i] == '\n')
-	{
 		newtemp[i] = '\n';
-		i++;
-	}
-	newtemp[i] = '\0';
+	i++;
+	//newtemp[i] = '\0';
+	//printf("LINE: %s.", newtemp);
+	//free(temp);
 	return (newtemp);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*resul;
+	char	*result;
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	resul = (char *) malloc(ft_strlen(s1) + ft_strlen(s2) + 1 * sizeof(char));
-	if (!resul)
+	result = (char *) malloc(ft_strlen(s1) + ft_strlen(s2) + 1 * sizeof(char));
+	if (!result)
 		return (NULL);
 	while (s1[i])
-		resul[j++] = s1[i++];
+		result[j++] = s1[i++];
 	i = 0;
 	while (s2[i])
-		resul[j++] = s2[i++];
-	return (resul);
+		result[j++] = s2[i++];
+	result[j++] = '\0';
+	//free(s1);
+	return (result);
 }

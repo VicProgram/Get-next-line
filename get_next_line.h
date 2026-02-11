@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 20:03:05 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/10 21:20:09 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/11 13:24:53 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <stdio.h>
 
 int	ft_strlen(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(const char *s, int c);
 char	*get_next_line(int fd);
 char	*ft_cleantemp(char *temp);
