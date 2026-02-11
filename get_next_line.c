@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 20:03:13 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/11 18:13:01 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/11 20:31:17 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,23 @@ char	*get_next_line(int fd)
 {
 	ssize_t		bytesread;
 	char		*temp;
-	char		buffer[BUFFER_SIZE + 1];
+	char		*buffer;
 	static char	*stash;
 
+	buffer = malloc(BUFFER_SIZE +1);
 	if (stash)
 	{
 		temp = (ft_strchr(stash, '\n') + 1);
-		stash = "NULL";
+		stash = NULL;
 	}
 	else
-	{
-		temp = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	}
+		temp = "";
 	bytesread = read(fd, buffer, BUFFER_SIZE);
-	if (bytesread <= 0)
+	if (bytesread <= 0 && temp[0] == '\0')
 		return (NULL);
-	buffer[bytesread] = '\0';
 	while (bytesread > 0)
 	{
+		buffer[bytesread] = '\0';
 		temp = ft_strjoin(temp, buffer);
 		if (ft_strchr(temp, '\n'))
 		{
@@ -42,8 +41,9 @@ char	*get_next_line(int fd)
 		}
 		bytesread = read(fd, buffer, BUFFER_SIZE);
 		if (bytesread <= 0)
-			return (NULL);
+			return (temp);
 	}
+	free(buffer);
 	return (temp);
 }
 
@@ -55,8 +55,12 @@ int	main(void)
 	fd = open("naufrago.txt", O_RDONLY);
 	if (fd == -1)
 		return (1);
-
-
+	while ((linea = get_next_line(fd)) != NULL)
+	{
+		printf("%s", linea);
+		// free(linea);
+	}
+	
 	close(fd);
 	return (0);
 }
