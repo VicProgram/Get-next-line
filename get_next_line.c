@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 20:03:13 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/11 20:38:27 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/12 17:13:08 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_next_line(int fd)
 	if (stash)
 	{
 		temp = (ft_strchr(stash, '\n') + 1);
-		stash = NULL;
+		stash = NULL;;
 	}
 	else
 		temp = "";
