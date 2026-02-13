@@ -5,17 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/10 20:34:46 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/12 17:13:24 by vabad-ro         ###   ########.fr       */
+/*   Created: 2026/02/12 17:16:37 by vabad-ro          #+#    #+#             */
+/*   Updated: 2026/02/13 19:41:08 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*ft_makestash(char *stash)
+{
+	int		i;
+	int		j;
+	char	*newstash;
+
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	if (!stash[i])
+	{
+		free(stash);
+		return (NULL);
+	}
+	newstash = malloc(ft_strlen(stash) - i + 1);
+	if (!newstash)
+		return (NULL);
+	i++;
+	j = 0;
+	while (stash[i])
+		newstash[j++] = stash[i++];
+	newstash[j] = '\0';
+	free(stash);
+	return (newstash);
+}
+
 int	ft_strlen(const char *s)
 {
 	int	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i] != '\0')
 		i++;
@@ -24,44 +52,42 @@ int	ft_strlen(const char *s)
 
 char	*ft_strchr(const char *s, int c)
 {
-	char	*s_new;
-
-	s_new = (char *)s;
-	if ((unsigned char)c == '\0')
+	if (!s)
+		return (NULL);
+	while (*s)
 	{
-		while (*s_new)
-			s_new++;
-		return (s_new);
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
-	while (*s_new)
-	{
-		if (*s_new == (unsigned char)c)
-			return (s_new);
-		s_new++;
-	}
+	if ((char)c == '\0')
+		return ((char *)s);
 	return (NULL);
 }
 
-char	*ft_cleantemp(char *temp)
+char	*ft_cleanstash(char *stash)
 {
 	int		i;
-	char	*newtemp;
+	char	*newstash;
 
 	i = 0;
-	while (temp[i] && temp[i] != '\n')
+	if (!stash || !stash[0])
+		return (NULL);
+	while (stash[i] && stash[i] != '\n')
 		i++;
-	newtemp = malloc(i + 1);
-	if (!newtemp)
+	newstash = malloc(i + 2);
+	if (!newstash)
 		return (NULL);
 	i = 0;
-	while (temp[i] && temp[i] != '\n')
+	while (stash[i] && stash[i] != '\n')
 	{
-		newtemp[i] = temp[i];
+		newstash[i] = stash[i];
 		i++;
 	}
-	if (temp[i] == '\n')
-		newtemp[i] = '\n';
-	return (newtemp);
+	if (stash[i] == '\n')
+		newstash[i++] = '\n';
+	newstash[i] = '\0';
+	return (newstash);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -72,6 +98,13 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
+	if (!s1)
+	{
+		s1 = malloc(sizeof(char) * 1);
+		s1[0] = '\0';
+	}
+	if (!s2)
+		return (s1);
 	result = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!result)
 		return (NULL);
@@ -80,5 +113,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	while (s2[i])
 		result[j++] = s2[i++];
+	result[j] = '\0';
+	free(s1);
 	return (result);
 }
