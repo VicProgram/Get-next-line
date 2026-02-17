@@ -6,7 +6,7 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 17:48:19 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/13 19:55:16 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/17 17:48:02 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2
+#  define BUFFER_SIZE 10
 
 # endif
 
@@ -29,5 +29,8 @@ char	*ft_strchr(const char *s, int c);
 char	*get_next_line(int fd);
 char	*ft_cleanstash(char *stash);
 char	*ft_makestash(char *stash);
+char	*ft_strdup(const char *s1);
+char	*ft_freestash(char *stash);
+
 
 #endif

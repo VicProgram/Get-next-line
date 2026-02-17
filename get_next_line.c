@@ -6,32 +6,50 @@
 /*   By: vabad-ro <vabad-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 17:15:08 by vabad-ro          #+#    #+#             */
-/*   Updated: 2026/02/16 14:15:56 by vabad-ro         ###   ########.fr       */
+/*   Updated: 2026/02/17 17:51:18 by vabad-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*read_and_stash(int fd, char *stash)
+/* char	*ft_freestash(char *stash)
+{
+	if(stash)
+		free(stash);
+	if(buffer)
+	return (NULL);
+} */
+
+static char	*ft_read_and_stash(int fd, char *stash)
 {
 	char	*buffer;
 	ssize_t	bytesread;
 
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
+	{
+		if (stash)
+			free(stash);
+		stash = NULL;
 		return (NULL);
+	}
 	bytesread = 1;
-	while (!ft_strchr(stash, '\n') && bytesread != 0)
+	while (bytesread > 0 && !ft_strchr(stash, '\n'))
 	{
 		bytesread = read(fd, buffer, BUFFER_SIZE);
 		if (bytesread == -1)
 		{
-			free(buffer);
 			free(stash);
-			return (NULL);
+			stash = NULL;
+			return (free(buffer), NULL);
 		}
-		buffer[bytesread] = '\0';
-		stash = ft_strjoin(stash, buffer);
+		if (bytesread > 0)
+		{
+			buffer[bytesread] = '\0';
+			stash = ft_strjoin(stash, buffer);
+			if (!stash)
+				return (free(buffer), NULL);
+		}
 	}
 	free(buffer);
 	return (stash);
@@ -44,31 +62,20 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	stash = read_and_stash(fd, stash);
+	stash = ft_read_and_stash(fd, stash);
 	if (!stash)
+	{
+		free(stash);
+		stash = NULL;
 		return (NULL);
+	}
 	line = ft_cleanstash(stash);
+	if (!line)
+	{
+		free(stash);
+		stash = NULL;
+		return (NULL);
+	}
 	stash = ft_makestash(stash);
 	return (line);
 }
-
-/* int	main(void)
-{
-	int	fd;
-	char	*linea;
-
-	fd = open("texto.txt", O_RDONLY);
-	// fd[1] = open("texto2.txt", O_RDONLY);
-	// fd[2] = open("texto1.txt", O_RDONLY);
-	if (fd == -1)
-		return (1);
-	while ((linea = get_next_line(fd)))
-	{
-		printf("%s", linea);
-		free(linea);
-	}
-	// linea = get_next_line(fd);
-	// printf("%s", linea);
-	close(fd);
-	return (0);
-} */
